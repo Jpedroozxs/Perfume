@@ -1,27 +1,237 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Perfume</title>
-</head>
-<body>
-    <div class="container">
-        <header>
-
-
-        </header>
-
-        <main>
-            <section>
-                
-            </section>
-        </main>
-        <footer>
-            <p>João Pedro Marques Pinheiro</p>
-        </footer>
-    </div>
-
+<style>
+    :root {
+      --gold: #d4af37;
+      --bg: #050506;
+      --text: #ffffff;
+      --muted: #9a9a9a;
+    }
     
-</body>
-</html>
+    /* RESET */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      overflow-x: hidden;
+    }
+    
+    /* FUNDO LUXO CINEMATOGRÁFICO */
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background: radial-gradient(circle at 20% 20%, rgba(255,255,255,0.05), transparent 60%),
+                  radial-gradient(circle at 80% 0%, rgba(212,175,55,0.12), transparent 60%);
+      z-index: -1;
+    }
+    
+    /* MAIN */
+    main {
+      padding: 100px 40px;
+      max-width: 1300px;
+      margin: auto;
+    }
+    
+    /* HERO DIFERENTE */
+    .hero {
+      margin-bottom: 120px;
+      position: relative;
+    }
+    
+    .hero h1 {
+      font-size: 5rem;
+      font-weight: 800;
+      line-height: 1;
+      background: linear-gradient(120deg, #ffffff, #aaa, var(--gold));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    
+    .hero p {
+      max-width: 600px;
+      margin-top: 25px;
+      font-size: 1.2rem;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+    
+    /* GRID DIFERENTE (ASSIMÉTRICO) */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 30px;
+    }
+    
+    /* CARDS ULTRA MODERNOS */
+    .card {
+      position: relative;
+      padding: 35px;
+      border-radius: 22px;
+      overflow: hidden;
+      background: linear-gradient(145deg, rgba(255,255,255,0.05), rgba(255,255,255,0.01));
+      border: 1px solid rgba(255,255,255,0.08);
+      transition: 0.5s ease;
+    }
+    
+    /* efeito glow externo */
+    .card::before {
+      content: "";
+      position: absolute;
+      inset: -2px;
+      background: linear-gradient(120deg, transparent, rgba(212,175,55,0.5), transparent);
+      opacity: 0;
+      transition: 0.6s;
+    }
+    
+    .card:hover::before {
+      opacity: 1;
+    }
+    
+    /* efeito luz interna */
+    .card::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at top left, rgba(255,255,255,0.08), transparent 70%);
+    }
+    
+    /* hover brutal */
+    .card:hover {
+      transform: translateY(-15px) scale(1.03);
+      box-shadow: 0 40px 100px rgba(0,0,0,0.9),
+                  0 0 60px rgba(212,175,55,0.15);
+    }
+    
+    /* TITULOS */
+    .card h2 {
+      font-size: 1.5rem;
+      margin-bottom: 15px;
+      background: linear-gradient(90deg, var(--gold), #fff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    
+    .card p {
+      color: var(--muted);
+      line-height: 1.6;
+      font-size: 0.95rem;
+    }
+    
+    /* CARD PRINCIPAL GIGANTE */
+    .big {
+      grid-column: 1 / span 7;
+      min-height: 260px;
+    }
+    
+    .side1 {
+      grid-column: 8 / span 5;
+    }
+    
+    .side2 {
+      grid-column: 1 / span 4;
+    }
+    
+    .side3 {
+      grid-column: 5 / span 4;
+    }
+    
+    .side4 {
+      grid-column: 9 / span 4;
+    }
+    
+    /* ANIMAÇÃO ENTRADA MAIS DRAMÁTICA */
+    .card {
+      opacity: 0;
+      transform: translateY(80px) scale(0.95);
+      animation: show 1s ease forwards;
+    }
+    
+    .card:nth-child(1) { animation-delay: 0.2s; }
+    .card:nth-child(2) { animation-delay: 0.4s; }
+    .card:nth-child(3) { animation-delay: 0.6s; }
+    .card:nth-child(4) { animation-delay: 0.8s; }
+    .card:nth-child(5) { animation-delay: 1s; }
+    
+    @keyframes show {
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+    
+    /* RESPONSIVO */
+    @media (max-width: 900px) {
+      .hero h1 {
+        font-size: 2.5rem;
+      }
+    
+      .grid {
+        grid-template-columns: 1fr;
+      }
+    
+      .big,
+      .side1,
+      .side2,
+      .side3,
+      .side4 {
+        grid-column: unset;
+      }
+    }
+    </style>
+    
+    
+    
+    <main>
+    
+      <div class="hero">
+        <h1>Perfume não é produto.<br>É presença.</h1>
+        <p>
+          Uma experiência sensorial que transcende o comum. Cada fragrância é criada para marcar memória, identidade e desejo.
+        </p>
+      </div>
+    
+      <div class="grid">
+    
+        <div class="card big">
+          <h2>Alta Perfumaria</h2>
+          <p>
+            Muito além de aroma: uma construção artística feita com precisão química e emoção. Cada nota é pensada como uma camada de um luxo invisível.
+          </p>
+        </div>
+    
+        <div class="card side1">
+          <h2>Matérias-Primas Raras</h2>
+          <p>
+            Ingredientes extraídos com extremo cuidado, provenientes dos lugares mais exclusivos do mundo.
+          </p>
+        </div>
+    
+        <div class="card side2">
+          <h2>Arquitetura Olfativa</h2>
+          <p>
+            Notas de saída, coração e fundo criam uma evolução viva sobre a pele.
+          </p>
+        </div>
+    
+        <div class="card side3">
+          <h2>Design Escultural</h2>
+          <p>
+            Cada frasco é uma peça de design que comunica luxo antes mesmo da fragrância.
+          </p>
+        </div>
+    
+        <div class="card side4">
+          <h2>Assinatura Pessoal</h2>
+          <p>
+            Um perfume não é usado. Ele define quem você é ao entrar em um ambiente.
+          </p>
+        </div>
+    
+      </div>
+    
+    </main>
