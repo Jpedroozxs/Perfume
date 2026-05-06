@@ -1,25 +1,529 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Perfume</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Essence & Aroma - Menu Perfumes</title>
+    <!-- Font Awesome 6 (free icons) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Google Fonts: Poppins + Playfair Display -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(145deg, #f9f5ef 0%, #f0e7de 100%);
+            font-family: 'Inter', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem 1.5rem;
+        }
+
+        /* container principal do menu/cardápio de perfumes */
+        .menu-container {
+            max-width: 1400px;
+            width: 100%;
+            background: rgba(255, 248, 240, 0.75);
+            backdrop-filter: blur(2px);
+            border-radius: 3rem;
+            box-shadow: 0 25px 45px -12px rgba(0, 0, 0, 0.25), inset 0 1px 1px rgba(255,255,255,0.6);
+            padding: 2rem 2rem 2.5rem;
+            transition: all 0.2s;
+        }
+
+        /* cabeçalho sofisticado */
+        .hero {
+            text-align: center;
+            margin-bottom: 2.5rem;
+            border-bottom: 2px solid #e4cfb5;
+            display: inline-block;
+            width: 100%;
+        }
+        .hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.9rem;
+            font-weight: 600;
+            letter-spacing: -0.5px;
+            background: linear-gradient(135deg, #3e2a21, #8b5a2b);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            margin-bottom: 0.4rem;
+        }
+        .hero p {
+            color: #6b4c3b;
+            font-weight: 400;
+            font-size: 1.1rem;
+            letter-spacing: 1px;
+            margin-bottom: 1rem;
+        }
+        .floral-icon {
+            font-size: 1.8rem;
+            color: #c2a178;
+            margin-bottom: 0.5rem;
+        }
+
+        /* navegação estilo abas / filtros */
+        .menu-tabs {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 0.7rem;
+            margin: 2rem 0 2rem 0;
+        }
+        .tab-btn {
+            background: transparent;
+            border: 1px solid #dccbb8;
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+            font-size: 0.9rem;
+            padding: 0.7rem 1.6rem;
+            border-radius: 60px;
+            cursor: pointer;
+            color: #5a3f2e;
+            transition: all 0.25s ease;
+            backdrop-filter: blur(4px);
+            background: rgba(255, 245, 235, 0.6);
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .tab-btn i {
+            font-size: 1rem;
+            color: #b47c48;
+        }
+        .tab-btn.active {
+            background: #916e48;
+            border-color: #916e48;
+            color: white;
+            box-shadow: 0 8px 18px rgba(146, 96, 48, 0.25);
+        }
+        .tab-btn.active i {
+            color: white;
+        }
+        .tab-btn:hover:not(.active) {
+            background: #e7d7ca;
+            border-color: #bb9b7a;
+            transform: translateY(-2px);
+        }
+
+        /* grade de perfumes estilo menu (cards) */
+        .perfume-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+            gap: 2rem;
+            margin-top: 1rem;
+        }
+        
+        .perfume-card {
+            background: #ffffffdd;
+            backdrop-filter: blur(4px);
+            border-radius: 2rem;
+            overflow: hidden;
+            transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            box-shadow: 0 12px 22px -12px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(235, 212, 188, 0.7);
+        }
+        .perfume-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 25px 30px -14px rgba(80, 50, 25, 0.2);
+            background: white;
+            border-color: #dbbd9b;
+        }
+
+        /* área ilustrativa da fragrância (ícone + imagem simbólica) */
+        .card-img {
+            background: linear-gradient(125deg, #f5ede4, #ecdccf);
+            padding: 1.8rem 0 1.2rem;
+            text-align: center;
+            position: relative;
+        }
+        .card-img i {
+            font-size: 4rem;
+            color: #a27142;
+            filter: drop-shadow(2px 6px 12px rgba(0,0,0,0.1));
+        }
+        .badge-note {
+            position: absolute;
+            top: 16px;
+            right: 20px;
+            background: #f1e2d4;
+            padding: 0.3rem 0.8rem;
+            border-radius: 50px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: #7e572f;
+            letter-spacing: 0.5px;
+            backdrop-filter: blur(2px);
+        }
+
+        .card-content {
+            padding: 1.5rem 1.4rem 1.8rem;
+        }
+        .perfume-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #2f241b;
+            margin-bottom: 0.4rem;
+            letter-spacing: -0.2px;
+        }
+        .brand {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: #b48244;
+            font-weight: 600;
+            margin-bottom: 0.7rem;
+        }
+        .notes {
+            font-size: 0.85rem;
+            color: #6f5543;
+            margin: 0.8rem 0;
+            line-height: 1.4;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+        .note-item {
+            background: #f0e5dc;
+            padding: 0.2rem 0.7rem;
+            border-radius: 40px;
+            font-size: 0.7rem;
+            font-weight: 500;
+            color: #735f4b;
+        }
+        .price {
+            font-weight: 800;
+            font-size: 1.4rem;
+            color: #8b5a2b;
+            margin: 0.9rem 0 0.5rem;
+            display: flex;
+            align-items: baseline;
+            gap: 6px;
+        }
+        .price small {
+            font-size: 0.8rem;
+            font-weight: 400;
+            color: #a18d79;
+        }
+        .order-btn {
+            background: #f0e2d6;
+            border: none;
+            width: 100%;
+            padding: 0.7rem;
+            border-radius: 60px;
+            font-weight: 600;
+            color: #7d593a;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 0.8rem;
+            font-family: 'Inter', sans-serif;
+        }
+        .order-btn i {
+            font-size: 0.9rem;
+        }
+        .order-btn:hover {
+            background: #dccbb8;
+            color: #4a3222;
+            transform: scale(0.98);
+        }
+
+        /* rodapé com mensagem olfativa */
+        .footer-menu {
+            text-align: center;
+            margin-top: 3rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid #e1cfbc;
+            font-size: 0.8rem;
+            color: #9c7b5e;
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+        .footer-menu span i {
+            margin-right: 6px;
+        }
+
+        /* mensagem para quando não há itens (filtro) */
+        .no-results {
+            text-align: center;
+            padding: 3rem;
+            background: #fbf6ef;
+            border-radius: 2rem;
+            color: #a6825c;
+            grid-column: 1 / -1;
+        }
+
+        @media (max-width: 640px) {
+            .menu-container {
+                padding: 1.2rem;
+            }
+            .hero h1 {
+                font-size: 2rem;
+            }
+            .tab-btn {
+                padding: 0.5rem 1.1rem;
+                font-size: 0.8rem;
+            }
+            .perfume-title {
+                font-size: 1.3rem;
+            }
+        }
+    </style>
 </head>
 <body>
-    <div class="container">
-        <header>
-
-
-        </header>
-
-        <main>
-
-        </main>
-        <footer>
-            <p>João Pedro Marques Pinheiro</p>
-        </footer>
+<div class="menu-container">
+    <div class="hero">
+        <div class="floral-icon">
+            <i class="fas fa-spa"></i> <i class="fas fa-feather-alt"></i>
+        </div>
+        <h1>Essence & Aroma</h1>
+        <p>menu olfativo · perfumaria artesanal e assinaturas exclusivas</p>
     </div>
 
+    <!-- filtros por família olfativa -->
+    <div class="menu-tabs">
+        <button class="tab-btn active" data-filter="all"><i class="fas fa-flask"></i> Todos</button>
+        <button class="tab-btn" data-filter="floral"><i class="fas fa-seedling"></i> Floral</button>
+        <button class="tab-btn" data-filter="amadeirado"><i class="fas fa-tree"></i> Amadeirado</button>
+        <button class="tab-btn" data-filter="citrico"><i class="fas fa-lemon"></i> Cítrico</button>
+        <button class="tab-btn" data-filter="oriental"><i class="fas fa-moon"></i> Oriental</button>
+    </div>
+
+    <!-- lista de perfumes (itens do "menu") -->
+    <div class="perfume-grid" id="perfumeGrid"></div>
+
+    <div class="footer-menu">
+        <span><i class="fas fa-hand-sparkles"></i> Amostras grátis a cada compra</span>
+        <span><i class="fas fa-tint"></i> Concentração Extrait / EDP</span>
+        <span><i class="fas fa-recycle"></i> Frasco recarregável</span>
+    </div>
+</div>
+
+<script>
+    // Base de dados dos perfumes (cada item representa uma "opção do menu")
+    const perfumes = [
+        {
+            id: 1,
+            name: "Jardim Secreto",
+            brand: "L'Âme Fleurie",
+            category: "floral",
+            notes: ["Jasmim", "Rosa Damascena", "Violeta", "Almíscar Branco"],
+            price: 385,
+            iconClass: "fas fa-rose"
+        },
+        {
+            id: 2,
+            name: "Céu de Âmbar",
+            brand: "Noir Obscur",
+            category: "oriental",
+            notes: ["Âmbar Gris", "Baunilha Bourbon", "Sândalo", "Benjoim"],
+            price: 449,
+            iconClass: "fas fa-crown"
+        },
+        {
+            id: 3,
+            name: "Floresta Viva",
+            brand: "Terra Matters",
+            category: "amadeirado",
+            notes: ["Cedro da Virgínia", "Vetiver", "Musgo", "Pimenta Rosa"],
+            price: 319,
+            iconClass: "fas fa-leaf"
+        },
+        {
+            id: 4,
+            name: "Lima Fresca",
+            brand: "Mediterranéo",
+            category: "citrico",
+            notes: ["Bergamota", "Lima Siciliana", "Manjericão", "Neroli"],
+            price: 275,
+            iconClass: "fas fa-sun"
+        },
+        {
+            id: 5,
+            name: "Rosa de Outono",
+            brand: "Parfums d'Art",
+            category: "floral",
+            notes: ["Rosa Turca", "Gerânio", "Cravo", "Patchouli Leve"],
+            price: 399,
+            iconClass: "fas fa-feather-alt"
+        },
+        {
+            id: 6,
+            name: "Sândalo Nobre",
+            brand: "Mystic Roots",
+            category: "amadeirado",
+            notes: ["Sândalo Australiano", "Couro", "Cardamomo", "Ládano"],
+            price: 479,
+            iconClass: "fas fa-mountain"
+        },
+        {
+            id: 7,
+            name: "Mandarina Spritz",
+            brand: "Zest Riviera",
+            category: "citrico",
+            notes: ["Tangerina", "Toranja", "Flor de Laranjeira", "Gengibre"],
+            price: 259,
+            iconClass: "fas fa-citrus"
+        },
+        {
+            id: 8,
+            name: "Noite de Marrakech",
+            brand: "Oud & Epices",
+            category: "oriental",
+            notes: ["Açafrão", "Oud", "Mel", "Tabaco Louco"],
+            price: 529,
+            iconClass: "fas fa-moon"
+        },
+        {
+            id: 9,
+            name: "Íris Pétala",
+            brand: "Blanc Violette",
+            category: "floral",
+            notes: ["Íris", "Fava Tonka", "Almíscar", "Leito de Flores"],
+            price: 365,
+            iconClass: "fas fa-dove"
+        },
+        {
+            id: 10,
+            name: "Cedro Esculpido",
+            brand: "Atelier Bois",
+            category: "amadeirado",
+            notes: ["Cedro Atlas", "Cipreste", "Incenso", "Ambretolide"],
+            price: 410,
+            iconClass: "fas fa-tree"
+        }
+    ];
+
+    // referências do DOM
+    const perfumeGrid = document.getElementById('perfumeGrid');
+    const tabBtns = document.querySelectorAll('.tab-btn');
+    let activeFilter = 'all';
+
+    // função para renderizar os cards baseado no filtro ativo
+    function renderPerfumes() {
+        if (!perfumeGrid) return;
+        
+        const filteredItems = activeFilter === 'all' 
+            ? perfumes 
+            : perfumes.filter(p => p.category === activeFilter);
+        
+        if (filteredItems.length === 0) {
+            perfumeGrid.innerHTML = `
+                <div class="no-results">
+                    <i class="fas fa-seedling" style="font-size: 2.5rem; opacity: 0.6;"></i>
+                    <h3 style="margin-top: 0.8rem;">Nenhum perfume encontrado</h3>
+                    <p style="margin-top: 0.5rem;">Tente outra família olfativa ✨</p>
+                </div>
+            `;
+            return;
+        }
+        
+        // gerar HTML dos cards com estilo refinado
+        let cardsHTML = '';
+        for (let p of filteredItems) {
+            // formata preço em reais
+            const formattedPrice = p.price.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+            // gera as tags de notas
+            const notesHtml = p.notes.map(note => `<span class="note-item">${note}</span>`).join('');
+            
+            // define um badge da categoria (visual)
+            let categoryLabel = '';
+            if (p.category === 'floral') categoryLabel = '🌷 Floral';
+            else if (p.category === 'amadeirado') categoryLabel = '🌲 Amadeirado';
+            else if (p.category === 'citrico') categoryLabel = '🍊 Cítrico';
+            else if (p.category === 'oriental') categoryLabel = '🕌 Oriental';
+            
+            cardsHTML += `
+                <div class="perfume-card" data-id="${p.id}">
+                    <div class="card-img">
+                        <i class="${p.iconClass}"></i>
+                        <div class="badge-note">${categoryLabel}</div>
+                    </div>
+                    <div class="card-content">
+                        <div class="perfume-title">${escapeHtml(p.name)}</div>
+                        <div class="brand">${escapeHtml(p.brand)}</div>
+                        <div class="notes">
+                            ${notesHtml}
+                        </div>
+                        <div class="price">
+                            ${formattedPrice} <small>90ml Eau de Parfum</small>
+                        </div>
+                        <button class="order-btn" data-name="${escapeHtml(p.name)}" data-price="${formattedPrice}">
+                            <i class="fas fa-shopping-bag"></i> Escolher fragrância
+                        </button>
+                    </div>
+                </div>
+            `;
+        }
+        perfumeGrid.innerHTML = cardsHTML;
+        
+        // adicionar eventos aos botões "order-btn" depois de renderizar (simular pedido)
+        document.querySelectorAll('.order-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const perfumeName = btn.getAttribute('data-name') || 'este perfume';
+                const perfumePrice = btn.getAttribute('data-price') || '';
+                // pequeno alerta elegante (simulação)
+                alert(`✨ "${perfumeName}" adicionado ao carrinho de desejos!\nTotal: ${perfumePrice} (Frete grátis acima de R$350)`);
+            });
+        });
+    }
     
+    // função auxiliar para evitar XSS simples (segurança)
+    function escapeHtml(str) {
+        if (!str) return '';
+        return str.replace(/[&<>]/g, function(m) {
+            if (m === '&') return '&amp;';
+            if (m === '<') return '&lt;';
+            if (m === '>') return '&gt;';
+            return m;
+        }).replace(/[\uD800-\uDBFF][\uDC00-\uDFFF]/g, function(c) {
+            return c;
+        });
+    }
+    
+    // configurar eventos de filtro (tabs)
+    function initFilters() {
+        tabBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const filterValue = btn.getAttribute('data-filter');
+                if (!filterValue) return;
+                activeFilter = filterValue;
+                // atualizar classe ativa nos botões
+                tabBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                // re-renderizar com novo filtro
+                renderPerfumes();
+            });
+        });
+    }
+    
+    // efeito de transição suave também no carregamento
+    window.addEventListener('DOMContentLoaded', () => {
+        initFilters();
+        renderPerfumes();
+        
+        // pequeno detalhe: adicionar leveza na interação com as abas usando um sombreamento suave
+        const container = document.querySelector('.menu-container');
+        if (container) {
+            container.style.transition = 'all 0.2s';
+        }
+    });
+</script>
 </body>
 </html>
